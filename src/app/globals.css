@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cafe-900: #1A1412;
+  --color-cafe-800: #2A211E;
+  --color-cafe-700: #382C27;
+
+  --color-crema-100: #F3EFEA;
+  --color-crema-200: #D6CEC2;
+
+  --color-canela: #A37B62;
+  --color-canela-dark: #8C6D53;
+
+  --color-caramelo: #D97706;
+  --color-caramelo-hover: #B45309;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-cafe-900);
+    color: var(--color-crema-100);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1412;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #382C27;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A37B62;
+}
