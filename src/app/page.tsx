@@ -2,6 +2,13 @@
 
 import { useState } from 'react';
 import { ArrowUpRight, Search } from 'lucide-react';
+import WordDetails from './components/WordDetails';
+
+interface palavrasType {
+    id: string;
+    palavra: string;
+    imagem: string;
+}
 
 const frasesIniciais = [
     {
@@ -15,6 +22,9 @@ export default function Home() {
     const [itens, setItens] = useState(frasesIniciais);
     const [palavra, setPalavra] = useState('');
     const [busca, setBusca] = useState('');
+    const [palavraSelecionada, setPalavraSelecionada] = useState<palavrasType | null>(null);
+
+    console.log(palavraSelecionada)
 
     function adicionarPalavra(e: React.FormEvent) {
         e.preventDefault();
@@ -103,9 +113,17 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <WordDetails
+                        isOpen={!!palavraSelecionada}
+                        onClose={() => setPalavraSelecionada(null)}
+                        palavra={palavraSelecionada?.palavra ?? ''}
+                        imagem={palavraSelecionada?.imagem ?? ''}
+                    />
+                    <div
+                        className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         {filtrados.map((item) => (
                             <div
+                                onClick={() => setPalavraSelecionada(item)}
                                 key={item.id}
                                 className="overflow-hidden rounded-xl border border-white/10 bg-[#181916]"
                             >
