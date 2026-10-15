@@ -4,13 +4,10 @@
   --color-cafe-900: #1A1412;
   --color-cafe-800: #2A211E;
   --color-cafe-700: #382C27;
-
   --color-crema-100: #F3EFEA;
   --color-crema-200: #D6CEC2;
-
   --color-canela: #A37B62;
   --color-canela-dark: #8C6D53;
-
   --color-caramelo: #D97706;
   --color-caramelo-hover: #B45309;
 }
@@ -25,8 +22,8 @@
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -34,10 +31,15 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #382C27;
-  border-radius: 3px;
+  background: #2A211E;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #A37B62;
+  background: #382C27;
+}
+
+* {
+  scrollbar-color: #2A211E #1A1412;
+  scrollbar-width: inherit;
 }
