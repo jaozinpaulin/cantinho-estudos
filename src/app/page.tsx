@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowUpRight, Search, Plus } from 'lucide-react';
 import WordDetails from './components/WordDetails';
 
@@ -10,35 +10,47 @@ interface PalavrasType {
     imagem: string;
 }
 
-const frasesIniciais: PalavrasType[] = [
-    {
-        id: '1',
-        palavra: 'Keep up',
-        imagem:
-            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop',
-    },
-];
-
 export default function Home() {
-    const [itens, setItens] = useState<PalavrasType[]>(frasesIniciais);
+    const [itens, setItens] = useState<PalavrasType[]>([]);
+    const [carregado, setCarregado] = useState(false);
     const [palavra, setPalavra] = useState('');
     const [busca, setBusca] = useState('');
     const [palavraSelecionada, setPalavraSelecionada] =
         useState<PalavrasType | null>(null);
+
+    useEffect(() => {
+        const salvas = localStorage.getItem('palavras');
+
+        if (salvas) {
+            try {
+                setItens(JSON.parse(salvas));
+            } catch {
+                localStorage.removeItem('palavras');
+            }
+        }
+
+        setCarregado(true);
+    }, []);
+
+    useEffect(() => {
+        if (carregado) {
+            localStorage.setItem('palavras', JSON.stringify(itens));
+        }
+    }, [itens, carregado]);
 
     function adicionarPalavra(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         if (!palavra.trim()) return;
 
-        setItens([
+        setItens((prev) => [
             {
                 id: Date.now().toString(),
                 palavra: palavra.trim(),
                 imagem:
-                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop',
             },
-            ...itens,
+            ...prev,
         ]);
 
         setPalavra('');
@@ -57,7 +69,8 @@ export default function Home() {
                     </h1>
 
                     <span className="text-xs text-crema-200">
-                        {itens.length} {itens.length === 1 ? 'registro' : 'registros'}
+                        {itens.length}{' '}
+                        {itens.length === 1 ? 'registro' : 'registros'}
                     </span>
                 </header>
 
@@ -70,9 +83,7 @@ export default function Home() {
                         Anote palavras, explore exemplos e construa seu repertório.
                     </p>
 
-                    <form
-                        onSubmit={adicionarPalavra}
-                        className="mt-5 flex gap-3">
+                    <form onSubmit={adicionarPalavra} className="mt-5 flex gap-3">
                         <input
                             type="text"
                             value={palavra}
@@ -83,13 +94,12 @@ export default function Home() {
 
                         <button
                             type="submit"
-                            className="flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-canela px-5 text-sm font-medium text-crema-100 transition-colors hover:bg-canela-dark">
+                            className="flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-canela px-5 text-sm font-medium text-crema-100 transition-colors hover:bg-canela-dark"
+                        >
                             <Plus size={16} />
                             Anotar
                         </button>
                     </form>
-
-
                 </div>
 
                 <div className="py-6">
