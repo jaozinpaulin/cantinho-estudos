@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowUpRight, Search, Plus, BookOpen } from 'lucide-react';
+import { ArrowUpRight, Search, Plus } from 'lucide-react';
 import WordDetails from './components/WordDetails';
 
 interface PalavrasType {
@@ -14,12 +14,13 @@ const frasesIniciais: PalavrasType[] = [
     {
         id: '1',
         palavra: 'Keep up',
-        imagem: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop',
+        imagem:
+            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop',
     },
 ];
 
 export default function Home() {
-    const [itens, setItens] = useState(frasesIniciais);
+    const [itens, setItens] = useState<PalavrasType[]>(frasesIniciais);
     const [palavra, setPalavra] = useState('');
     const [busca, setBusca] = useState('');
     const [palavraSelecionada, setPalavraSelecionada] =
@@ -48,98 +49,99 @@ export default function Home() {
     );
 
     return (
-        <main className="min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#191919_0%,#141414_240px,#141414_100%)] text-neutral-200">
-            <div className="mx-auto min-h-screen max-w-5xl border-x border-white/[0.05] px-5 py-7 sm:px-8">
-                <header className="flex items-center justify-between border-b border-white/10 pb-5">
-                    <div className="flex items-center gap-3">
-                        <BookOpen size={20} className="text-neutral-300" />
+        <main className="min-h-screen bg-matcha-950 text-crema-100">
+            <div className="mx-auto min-h-screen max-w-7xl border-x border-cafe-700/40 bg-cafe-900/80 px-6 py-6 sm:px-10">
+                <header className="flex items-center justify-between border-b border-cafe-700 pb-4">
+                    <h1 className="text-base font-medium tracking-tight">
+                        Cantinho
+                    </h1>
 
-                        <h1 className="text-lg font-medium tracking-tight">
-                            Cantinho
-                        </h1>
-                    </div>
-
-                    <span className="text-sm text-neutral-400">
+                    <span className="text-xs text-crema-200">
                         {itens.length} {itens.length === 1 ? 'registro' : 'registros'}
                     </span>
                 </header>
 
-                <div className="border-b border-white/[0.06] py-12 sm:py-16">
-                    <h2 className="max-w-xl text-3xl font-medium tracking-tight text-neutral-100 sm:text-4xl">
+                <div className="border-b border-cafe-700 py-7 sm:py-8">
+                    <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">
                         Seu inglês, uma expressão de cada vez.
                     </h2>
 
-                    <p className="mt-3 max-w-md text-sm leading-6 text-neutral-400">
-                        Anote palavras, explore exemplos e construa seu próprio repertório.
+                    <p className="mt-2 text-sm text-crema-200">
+                        Anote palavras, explore exemplos e construa seu repertório.
                     </p>
+
+                    <form
+                        onSubmit={adicionarPalavra}
+                        className="mt-5 flex gap-3">
+                        <input
+                            type="text"
+                            value={palavra}
+                            onChange={(e) => setPalavra(e.target.value)}
+                            placeholder="Anote uma palavra ou expressão..."
+                            className="h-12 min-w-0 flex-1 rounded-xl border border-cafe-700 bg-cafe-850 px-4 text-sm text-crema-100 outline-none transition-colors placeholder:text-crema-300 focus:border-canela/50"
+                        />
+
+                        <button
+                            type="submit"
+                            className="flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-canela px-5 text-sm font-medium text-crema-100 transition-colors hover:bg-canela-dark">
+                            <Plus size={16} />
+                            Anotar
+                        </button>
+                    </form>
+
+
                 </div>
-                <form
-                    onSubmit={adicionarPalavra}
-                    className="mt-7 flex flex-col gap-3 rounded-xl border border-white/10 bg-[#1B1B1B] p-3 sm:flex-row">
-                    <input
-                        value={palavra}
-                        onChange={(e) => setPalavra(e.target.value)}
-                        placeholder="Anote uma palavra ou expressão..."
-                        className="min-w-0 flex-1 rounded-lg bg-transparent px-4 py-3 text-sm text-neutral-100 outline-none placeholder:text-neutral-500"
-                    />
 
-                    <button
-                        type="submit"
-                        className="flex items-center cursor-pointer justify-center gap-2 rounded-lg bg-canela px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-canela-dark">
-                        <Plus size={16} />
-                        Anotar
-                    </button>
-                </form>
-
-                <div className="mt-12 pb-10">
+                <div className="py-6">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                            <h2 className="text-lg font-medium text-neutral-100">
+                            <h3 className="text-base font-medium">
                                 Seus registros
-                            </h2>
+                            </h3>
 
-                            <p className="mt-1 text-sm text-neutral-500">
+                            <p className="mt-1 text-xs text-crema-200">
                                 Tudo o que você está aprendendo.
                             </p>
                         </div>
 
                         <div className="relative sm:w-64">
                             <Search
-                                size={16}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500"
+                                size={15}
+                                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-crema-300"
                             />
 
                             <input
+                                type="text"
                                 value={busca}
                                 onChange={(e) => setBusca(e.target.value)}
                                 placeholder="Buscar registros..."
-                                className="w-full rounded-lg border border-white/10 bg-[#1B1B1B] py-2.5 pl-9 pr-3 text-sm text-neutral-100 outline-none transition-colors placeholder:text-neutral-500 focus:border-white/25 focus:bg-[#202020]"
+                                className="h-9 w-full rounded-lg border border-cafe-700 bg-cafe-850 pl-9 pr-3 text-xs text-crema-100 outline-none transition-colors placeholder:text-crema-300 focus:border-canela/50"
                             />
                         </div>
                     </div>
 
-                    <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {filtrados.map((item) => (
                             <button
                                 key={item.id}
                                 type="button"
                                 onClick={() => setPalavraSelecionada(item)}
-                                className="group overflow-hidden rounded-xl border border-white/10 bg-[#1B1B1B] text-left transition-colors hover:border-white/20 hover:bg-[#202020]"
+                                className="group flex flex-col overflow-hidden rounded-xl border border-cafe-700 bg-cafe-850 text-left transition-colors hover:border-canela/50"
                             >
                                 <img
                                     src={item.imagem}
                                     alt={item.palavra}
-                                    className="h-44 w-full border-b border-white/[0.06] object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                                    className="h-40 w-full border-b border-cafe-700 object-cover"
                                 />
 
-                                <div className="flex items-center justify-between p-4">
-                                    <h3 className="font-medium text-neutral-200">
+                                <div className="flex items-center justify-between gap-3 p-3.5">
+                                    <h3 className="truncate text-sm font-medium text-crema-100">
                                         {item.palavra}
                                     </h3>
 
                                     <ArrowUpRight
-                                        size={18}
-                                        className="text-neutral-500 transition-colors group-hover:text-neutral-200"
+                                        size={16}
+                                        className="shrink-0 text-crema-300 transition-colors group-hover:text-canela"
                                     />
                                 </div>
                             </button>
@@ -147,7 +149,7 @@ export default function Home() {
                     </div>
 
                     {filtrados.length === 0 && (
-                        <p className="rounded-xl border border-white/10 bg-[#1B1B1B] py-12 text-center text-sm text-neutral-500">
+                        <p className="mt-5 rounded-xl border border-cafe-700 bg-cafe-850 py-10 text-center text-sm text-crema-200">
                             Nenhum registro encontrado.
                         </p>
                     )}
