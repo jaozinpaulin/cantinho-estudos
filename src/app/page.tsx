@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Search, Plus } from 'lucide-react';
+import { ArrowUpRight, Search, Plus, StickyNote } from 'lucide-react';
 import WordDetails from './components/WordDetails';
+import Notepad from './components/Notepad';
+
 
 interface PalavrasType {
     id: string;
@@ -17,6 +19,7 @@ export default function Home() {
     const [busca, setBusca] = useState('');
     const [palavraSelecionada, setPalavraSelecionada] =
         useState<PalavrasType | null>(null);
+    const [openNote, setOpenNote] = useState(false);
 
     useEffect(() => {
         const salvas = localStorage.getItem('palavras');
@@ -114,6 +117,10 @@ export default function Home() {
                             </p>
                         </div>
 
+                        <button onClick={() => setOpenNote(true)}>
+                            <StickyNote size={20} />
+                        </button>
+
                         <div className="relative sm:w-64">
                             <Search
                                 size={15}
@@ -172,6 +179,7 @@ export default function Home() {
                 palavra={palavraSelecionada?.palavra ?? ''}
                 imagem={palavraSelecionada?.imagem ?? ''}
             />
+            {openNote && <Notepad onClose={() => setOpenNote(false)} />}
         </main>
     );
 }
