@@ -5,7 +5,6 @@ import { ArrowUpRight, Search, Plus, StickyNote } from 'lucide-react';
 import WordDetails from './components/WordDetails';
 import Notepad from './components/Notepad';
 
-
 interface PalavrasType {
     id: string;
     palavra: string;
@@ -117,23 +116,31 @@ export default function Home() {
                             </p>
                         </div>
 
-                        <button onClick={() => setOpenNote(true)}>
-                            <StickyNote size={20} />
-                        </button>
+                        <div className="flex items-center gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setOpenNote(true)}
+                                aria-label="Abrir bloco de notas"
+                                title="Bloco de notas"
+                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cafe-700 bg-cafe-850 text-crema-200 transition-colors hover:border-canela/50 hover:text-canela"
+                            >
+                                <StickyNote size={17} />
+                            </button>
 
-                        <div className="relative sm:w-64">
-                            <Search
-                                size={15}
-                                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-crema-300"
-                            />
+                            <div className="relative w-full sm:w-64">
+                                <Search
+                                    size={15}
+                                    className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-crema-300"
+                                />
 
-                            <input
-                                type="text"
-                                value={busca}
-                                onChange={(e) => setBusca(e.target.value)}
-                                placeholder="Buscar registros..."
-                                className="h-9 w-full rounded-lg border border-cafe-700 bg-cafe-850 pl-9 pr-3 text-xs text-crema-100 outline-none transition-colors placeholder:text-crema-300 focus:border-canela/50"
-                            />
+                                <input
+                                    type="text"
+                                    value={busca}
+                                    onChange={(e) => setBusca(e.target.value)}
+                                    placeholder="Buscar registros..."
+                                    className="h-9 w-full rounded-lg border border-cafe-700 bg-cafe-850 pl-9 pr-3 text-xs text-crema-100 outline-none transition-colors placeholder:text-crema-300 focus:border-canela/50"
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -179,6 +186,7 @@ export default function Home() {
                 palavra={palavraSelecionada?.palavra ?? ''}
                 imagem={palavraSelecionada?.imagem ?? ''}
             />
+
             {openNote && <Notepad onClose={() => setOpenNote(false)} />}
         </main>
     );
